@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Users, Star, Clock, ShieldCheck, Languages, MessageSquare, Volume2, Maximize, X } from 'lucide-react';
-import Image from 'next/image';
 
 export default function Hero() {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,13 +65,27 @@ export default function Hero() {
             onClick={() => setIsOpen(true)}
             className="relative w-full max-w-5xl aspect-video md:aspect-[16/9] bg-slate-900 rounded-t-[32px] md:rounded-t-[48px] overflow-hidden group cursor-pointer"
           >
-            {/* Real Thumbnail Background */}
-            <Image 
-              src="/thumbnail.png" 
-              alt="Clinic Video Thumbnail" 
-              fill 
-              className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
-            />
+            {/* Desktop Video Background */}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover opacity-60 hidden md:block group-hover:scale-105 transition-transform duration-700"
+            >
+              <source src="/computerview.mp4" type="video/mp4" />
+            </video>
+
+            {/* Mobile Video Background */}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover opacity-60 block md:hidden group-hover:scale-105 transition-transform duration-700"
+            >
+              <source src="/mobileview.mp4" type="video/mp4" />
+            </video>
             
             {/* Red Gradient Frame Glow */}
             <div className="absolute inset-0 bg-gradient-to-t from-red-600/40 via-transparent to-transparent pointer-events-none" />
@@ -179,7 +192,7 @@ export default function Hero() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
+              className="relative w-full max-w-5xl md:aspect-video aspect-[9/16] bg-black rounded-2xl overflow-hidden shadow-2xl max-h-[90vh]"
               onClick={(e) => e.stopPropagation()}
             >
               <button 
@@ -188,16 +201,26 @@ export default function Hero() {
               >
                 <X size={24} />
               </button>
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-                title="Palera Design Agency Video"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              ></iframe>
+              
+              {/* Desktop Video */}
+              <video 
+                className="w-full h-full hidden md:block" 
+                controls 
+                autoPlay 
+                playsInline
+              >
+                <source src="/computerview.mp4" type="video/mp4" />
+              </video>
+
+              {/* Mobile Video */}
+              <video 
+                className="w-full h-full block md:hidden" 
+                controls 
+                autoPlay 
+                playsInline
+              >
+                <source src="/mobileview.mp4" type="video/mp4" />
+              </video>
             </motion.div>
           </motion.div>
         )}
